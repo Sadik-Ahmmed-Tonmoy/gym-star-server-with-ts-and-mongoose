@@ -38,13 +38,13 @@ const getAllUsers = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
-  const { objectId } = req.params;
+  const id = req.params.objectId || req.user.id;
   const  userData  = req.body;
-  const updatedUser = await UserServices.updateUserIntoDB(objectId, userData);
+  const updatedUser = await UserServices.updateUserIntoDB(id, userData);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User updated successfully',
+    message: 'User updated successfully, Please login again if you are the same user',
     data: updatedUser,
   });
 });

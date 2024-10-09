@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post(
   '/create',
+  auth(USER_ROLE.admin, USER_ROLE.trainee),
   validateRequest(UserValidation.createUserValidationSchema),
   UserControllers.createUser,
 );
@@ -19,13 +20,18 @@ router.get(
   UserControllers.getMe,
 );
 
-router.get('/',  auth(USER_ROLE.admin), UserControllers.getAllUsers);
-router.get('/:objectId', UserControllers.getSingleUserByObjectId);
+router.patch(
+  '/me',
+  auth(USER_ROLE.admin, USER_ROLE.trainer, USER_ROLE.trainee),
+  UserControllers.updateUser,
+);
 
+router.get('/',  auth(USER_ROLE.admin), UserControllers.getAllUsers);
+router.get('/:objectId', auth(USER_ROLE.admin, USER_ROLE.trainer, USER_ROLE.trainee), UserControllers.getSingleUserByObjectId);
  
 router.patch(
   '/:objectId',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin, USER_ROLE.trainee),
   validateRequest(UserValidation.updateUserValidationSchema),
   UserControllers.updateUser,
 );
@@ -37,6 +43,6 @@ router.post(
   UserControllers.changeStatus,
 );
 
-router.delete('/:objectId', UserControllers.deleteUser);
+router.delete('/:objectId', auth(USER_ROLE.admin), UserControllers.deleteUser);
 
 export const userRoutes = router;
