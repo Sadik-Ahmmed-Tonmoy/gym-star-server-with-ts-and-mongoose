@@ -14,6 +14,18 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+const createTrainee = catchAsync(async (req, res) => {
+  const userData = req.body;
+  userData.role = 'trainee';
+  const result = await UserServices.createTraineeIntoDB(userData);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Trainee is created successfully',
+    data: result,
+  });
+});
+
 const getSingleUserByObjectId = catchAsync(async (req, res) => {
   const { objectId } = req.params;
   const user = await UserServices.getSingleUserByObjectIdFromDB(objectId);
@@ -92,6 +104,7 @@ const changeStatus = catchAsync(async (req, res) => {
 
 export const UserControllers = {
   createUser,
+  createTrainee,
   getSingleUserByObjectId,
   getAllUsers,
   updateUser,

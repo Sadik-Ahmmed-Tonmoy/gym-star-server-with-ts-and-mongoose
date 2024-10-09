@@ -33,7 +33,7 @@ const classSchema = new Schema<TClass, ClassModel>(
     },
     maxTrainees: {
       type: Number,
-      required: [true, 'Max Trainees is required'],
+      required: false,
     },
     enrolledTrainees: {
       type: [Schema.Types.ObjectId],
@@ -67,7 +67,7 @@ const classSchema = new Schema<TClass, ClassModel>(
 
 // Pre-save hook to validate maximum 5 classes per day
 classSchema.pre('save', async function (next) {
-  const Class = this.constructor as typeof ClassModel;
+  // const Class = this.constructor as typeof ClassModel;
   const classCount = await Class.countDocuments({ date: this.date });
     if (classCount >= 5) {
       throw new Error('Cannot schedule more than 5 classes per day.');

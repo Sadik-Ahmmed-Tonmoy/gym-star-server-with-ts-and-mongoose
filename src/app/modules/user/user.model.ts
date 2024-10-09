@@ -49,12 +49,17 @@ const userSchema = new Schema<TUser, UserModel>(
     role: {
       type: String,
       enum: ['admin', 'trainee', 'trainer'],
-      default: 'trainee',
+      default: 'trainer',
     },
     status: {
       type: String,
       enum: UserStatus,
       default: 'in-progress',
+    },
+    classSchedules: {
+      type: [Schema.Types.ObjectId],
+      ref: 'Class',
+    required: false,
     },
     isDeleted: {
       type: Boolean,

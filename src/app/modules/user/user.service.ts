@@ -6,7 +6,11 @@ import { User } from './user.model';
 // create user into the database
 const createUserIntoDB = async (userData: TUser) => {
   const user = await User.create(userData);
-  
+  return user;
+};
+
+const createTraineeIntoDB = async (userData: TUser) => {
+  const user = await User.create(userData);
   return user;
 };
 
@@ -18,12 +22,12 @@ const getSingleUserByObjectIdFromDB = async (objectId: string) => {
       'name._id': 0,
       __v: 0,
     },
-  );
+  ).populate('classSchedules');
   return user;
 };
 
 const getAllUsersFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(User.find(), query)
+  const userQuery = new QueryBuilder(User.find().populate('classSchedules'), query)
     .search(userSearchableFields)
     .filter()
     .sort()
@@ -99,6 +103,7 @@ const changeStatus = async (id: string, payload: { status: string }) => {
 
 export const UserServices = {
   createUserIntoDB,
+  createTraineeIntoDB,
   getSingleUserByObjectIdFromDB,
   getAllUsersFromDB,
   updateUserIntoDB,

@@ -9,9 +9,15 @@ const router = express.Router();
 
 router.post(
   '/create',
-  auth(USER_ROLE.admin, USER_ROLE.trainee),
+  auth(USER_ROLE.admin),
   validateRequest(UserValidation.createUserValidationSchema),
   UserControllers.createUser,
+);
+
+router.post(
+  '/create-trainee',
+  validateRequest(UserValidation.createUserValidationSchema),
+  UserControllers.createTrainee,
 );
 
 router.get(

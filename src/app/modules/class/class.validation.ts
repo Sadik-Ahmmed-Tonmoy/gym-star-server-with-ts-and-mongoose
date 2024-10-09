@@ -16,7 +16,7 @@ const createClassValidationSchema = z.object({
       })
       .optional(),
     duration: z.string().default('2hrs'),
-    maxTrainees: z.number().optional().default(10),
+    maxTrainees: z.number().min(1, 'Cannot have less than 1 trainees').max(10, 'Cannot have more than 10 trainees in one class').optional().default(10),
     enrolledTrainees: z
       .array(z.instanceof(Types.ObjectId, { message: 'Invalid trainee ID' }))
       .max(10, { message: 'Cannot have more than 10 trainees in one class' })
