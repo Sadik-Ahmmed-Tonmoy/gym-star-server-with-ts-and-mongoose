@@ -9,13 +9,13 @@ const router = express.Router();
 
 router.post(
   '/create',
-  auth(USER_ROLE.admin),
   validateRequest(UserValidation.createUserValidationSchema),
   UserControllers.createUser,
 );
 
 router.post(
   '/create-trainee',
+  auth(USER_ROLE.admin),
   validateRequest(UserValidation.createUserValidationSchema),
   UserControllers.createTrainee,
 );
