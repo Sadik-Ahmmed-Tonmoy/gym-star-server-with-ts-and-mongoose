@@ -11,7 +11,7 @@ import { classSearchableFields } from './class.constant';
 const createClassInDB = async (classData: TClass) => {
   const session = await mongoose.startSession();
   session.startTransaction();
-
+  
   try {
     const { startTime } = classData;
     // Calculate 2 hours after start time and add to end time
