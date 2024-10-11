@@ -1,11 +1,21 @@
-## API Endpoints
 
 ### User Management
 
 #### Admin Credentials
-
 - **Email**: workwithsadik@gmail.com
 - **Password**: AdminStrongPass123
+
+#### Trainee Credentials
+- **Email**: traingee@example.com
+- **Password**: StrongPass123
+
+#### Trainer Credentials
+- **Email**: Trainer@trainer.com
+- **Password**: StrongPass123
+
+
+## API Endpoints
+- **BASE API**: `https://gym-star-server-with-ts-and-mongoose.vercel.app/`
 
 #### Create User (Admin Only)
 
