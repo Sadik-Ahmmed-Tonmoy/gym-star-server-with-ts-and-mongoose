@@ -11,7 +11,7 @@ import { classSearchableFields } from './class.constant';
 const createClassInDB = async (classData: TClass) => {
   const session = await mongoose.startSession();
   session.startTransaction();
-  
+
   try {
     const { startTime } = classData;
     // Calculate 2 hours after start time and add to end time
@@ -53,8 +53,8 @@ const createClassInDB = async (classData: TClass) => {
     // Update the trainer's class list within the transaction
     await User.findByIdAndUpdate(
       classData.trainer,
-      { $push: { classes: newClass[0]._id } }, // `newClass` is an array when using `create` with transactions
-      { new: true, session }
+      { $push: { classSchedules: newClass[0]._id } }, // `newClass` is an array when using `create` with transactions
+      { new: true, session },
     );
 
     // Commit the transaction
@@ -70,9 +70,11 @@ const createClassInDB = async (classData: TClass) => {
   }
 };
 
-
 const getAllClassesFromDB = async (query: Record<string, unknown>) => {
-  const userQuery = new QueryBuilder(Class.find().populate('trainer'), query)
+  const userQuery = new QueryBuilder(
+    Class.find().populate('trainer'),
+    query,
+  )
     .search(classSearchableFields)
     .filter()
     .sort()

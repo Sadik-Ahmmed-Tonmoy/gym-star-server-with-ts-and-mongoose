@@ -11,24 +11,36 @@ router.post(
   '/',
   auth(USER_ROLE.admin),
   validateRequest(ClassValidation.createClassValidationSchema),
-  ClassControllers.createClass
+  ClassControllers.createClass,
 );
 
-router.get('/', auth(USER_ROLE.admin), ClassControllers.getAllClasses);
+router.get(
+  '/',
+  auth(USER_ROLE.admin, USER_ROLE.trainee),
+  ClassControllers.getAllClasses,
+);
 
 router.get('/:classId', auth(USER_ROLE.admin), ClassControllers.getSingleClass);
 
 router.patch(
   '/:classId',
-  auth(USER_ROLE.admin), 
+  auth(USER_ROLE.admin),
   validateRequest(ClassValidation.updateClassValidationSchema),
-  ClassControllers.updateClass
+  ClassControllers.updateClass,
 );
 
-router.delete('/:classId',  auth(USER_ROLE.admin),  ClassControllers.deleteClass);
+router.delete('/:classId', auth(USER_ROLE.admin), ClassControllers.deleteClass);
 
-router.post('/:classId/enroll', auth(USER_ROLE.admin),  ClassControllers.enrollTraineeInClass);
+router.post(
+  '/:classId/enroll',
+  auth(USER_ROLE.trainee),
+  ClassControllers.enrollTraineeInClass,
+);
 
-router.post('/:classId/remove',  auth(USER_ROLE.admin),  ClassControllers.removeTraineeFromClass);
+router.post(
+  '/:classId/remove',
+  auth(USER_ROLE.trainee),
+  ClassControllers.removeTraineeFromClass,
+);
 
 export const ClassRoutes = router;

@@ -107,7 +107,7 @@ const deleteUserFromDB = async (objectId: string) => {
 const getMeFromDB = async (email: string) => {
   const result = await User.findOne({ email }).select(
     '-password -__v -name._id',
-  );
+  ).populate('classSchedules');
   return result;
 };
 

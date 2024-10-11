@@ -14,6 +14,15 @@
 - **Password**: StrongPass123
 
 
+## Technology Stack
+- **Frontend**: Next.js, Tailwind CSS, Redux
+- **Backend**: Node.js, Express.js, TypeScript
+- **Database**: MongoDB, Mongoose (ODM)
+- **Authentication**: JWT (JSON Web Tokens)
+- **Validation**: Zod for schema validation
+- **Deployment**: Vercel (Frontend) and Heroku/DigitalOcean (Backend)
+
+
 ## API Endpoints
 - **BASE API**: `https://gym-star-server-with-ts-and-mongoose.vercel.app/`
 
