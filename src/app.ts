@@ -9,7 +9,7 @@ import notFound from './app/middlewares/notFound';
 // parser
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://gym-star-client.vercel.app'], credentials: true }));
 
 app.use('/api/v1', router);
 

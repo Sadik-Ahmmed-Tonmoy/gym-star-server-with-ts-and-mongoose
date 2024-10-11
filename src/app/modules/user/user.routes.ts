@@ -19,11 +19,20 @@ router.post(
   UserControllers.createTrainee,
 );
 
+router.post(
+  '/create-trainer',
+  auth(USER_ROLE.admin),
+  validateRequest(UserValidation.createUserValidationSchema),
+  UserControllers.createTrainer,
+);
+
 router.get(
   '/me',
   auth(USER_ROLE.admin, USER_ROLE.trainer, USER_ROLE.trainee),
   UserControllers.getMe,
 );
+
+router.get('/trainer', auth(USER_ROLE.admin), UserControllers.getAllTrainers);
 
 router.patch(
   '/me',
@@ -31,9 +40,13 @@ router.patch(
   UserControllers.updateUser,
 );
 
-router.get('/',  auth(USER_ROLE.admin), UserControllers.getAllUsers);
-router.get('/:objectId', auth(USER_ROLE.admin, USER_ROLE.trainer, USER_ROLE.trainee), UserControllers.getSingleUserByObjectId);
- 
+router.get('/', auth(USER_ROLE.admin), UserControllers.getAllUsers);
+router.get(
+  '/:objectId',
+  auth(USER_ROLE.admin, USER_ROLE.trainer, USER_ROLE.trainee),
+  UserControllers.getSingleUserByObjectId,
+);
+
 router.patch(
   '/:objectId',
   auth(USER_ROLE.admin, USER_ROLE.trainee),

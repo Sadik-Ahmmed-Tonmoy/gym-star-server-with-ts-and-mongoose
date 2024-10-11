@@ -14,9 +14,26 @@ const createTraineeIntoDB = async (userData: TUser) => {
   return user;
 };
 
+const createTrainerIntoDB = async (userData: TUser) => {
+  const user = await User.create(userData);
+  return user;
+};
+
 const getSingleUserByObjectIdFromDB = async (objectId: string) => {
   const user = await User.findById(
     { _id: objectId },
+    {
+      password: 0,
+      'name._id': 0,
+      __v: 0,
+    },
+  ).populate('classSchedules');
+  return user;
+};
+
+const getAllTrainersFromDB = async () => {
+  const user = await User.find(
+    { role: 'trainer' },
     {
       password: 0,
       'name._id': 0,
@@ -104,6 +121,8 @@ const changeStatus = async (id: string, payload: { status: string }) => {
 export const UserServices = {
   createUserIntoDB,
   createTraineeIntoDB,
+  createTrainerIntoDB,
+  getAllTrainersFromDB,
   getSingleUserByObjectIdFromDB,
   getAllUsersFromDB,
   updateUserIntoDB,

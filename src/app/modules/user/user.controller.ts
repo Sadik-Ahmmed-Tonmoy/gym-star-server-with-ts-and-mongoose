@@ -26,6 +26,18 @@ const createTrainee = catchAsync(async (req, res) => {
   });
 });
 
+const createTrainer = catchAsync(async (req, res) => {
+  const userData = req.body;
+  userData.role = 'trainer';
+  const result = await UserServices.createTrainerIntoDB(userData);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Trainee is created successfully',
+    data: result,
+  });
+});
+
 const getSingleUserByObjectId = catchAsync(async (req, res) => {
   const { objectId } = req.params;
   const user = await UserServices.getSingleUserByObjectIdFromDB(objectId);
@@ -33,6 +45,16 @@ const getSingleUserByObjectId = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: user?._id ? 'User found successfully' : 'User not found',
+    data: user,
+  });
+});
+
+const getAllTrainers = catchAsync(async (req, res) => {
+  const user = await UserServices.getAllTrainersFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Trainers retrieved successfully',
     data: user,
   });
 });
@@ -105,7 +127,9 @@ const changeStatus = catchAsync(async (req, res) => {
 export const UserControllers = {
   createUser,
   createTrainee,
+  createTrainer,
   getSingleUserByObjectId,
+  getAllTrainers,
   getAllUsers,
   updateUser,
   deleteUser,
