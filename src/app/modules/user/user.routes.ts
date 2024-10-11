@@ -15,7 +15,6 @@ router.post(
 
 router.post(
   '/create-trainee',
-  auth(USER_ROLE.admin),
   validateRequest(UserValidation.createUserValidationSchema),
   UserControllers.createTrainee,
 );
